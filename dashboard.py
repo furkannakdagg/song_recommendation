@@ -4,7 +4,7 @@ import extras
 from PIL import Image
 
 
-qr = Image.open('qr.png')
+qr = Image.open('images/qr.png')
 spo_png = Image.open("images/spotify.png")
 error_img = Image.open("images/error.jpeg")
 miuul = Image.open("images/miuul.png")
