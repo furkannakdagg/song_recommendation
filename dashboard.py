@@ -90,7 +90,7 @@ if col1.checkbox("Şarkıyı Bul"):
                     if selection != "Öneri Sayısı Seç":
                         if selection != 10:
                             rec_cols = st.columns(selection, gap="small")
-                            for i in range(rec_df.shape[0]):
+                            for i in range(selection):
                                 rec_name = rec_df.iloc[i, 0]
                                 rec_song = rec_df.iloc[i, 1]
                                 rec_img, rec_preview = ss.search_pic(rec_name, rec_song)
