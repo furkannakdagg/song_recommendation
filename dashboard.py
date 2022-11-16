@@ -43,7 +43,7 @@ with col2:
     st.image(miuul, caption='🧠 Skills of tomorrow!', width=325)
 
 with col3:
-    col3.markdown("[![Foo](https://img.icons8.com/material-outlined/96/000000/github.png)](https://github.com/furkannakdagg/song_recommendation)")
+    col3.image(qr, width=200)
 st.write(" ")
 
 
@@ -71,8 +71,6 @@ if song_name and artist_name:
         markdown_summary(col1)
         check = col1.checkbox("Şarkının doğru olduğunu onaylıyor musunuz?")
         if song_name and artist_name and check:
-            tickers = [None, 3, 5, 10]
-            selection = st.selectbox("Kaç öneri görmek istersiniz?", tickers)
             try:
                 rec_song = df[(df["name"].str.contains(song_name, case=False)) &
                               (df["artists"].str.contains(artist_name, case=False))] \
@@ -81,10 +79,12 @@ if song_name and artist_name:
             except:
                 rec_song = ss.audio_features(song_name, artist_name)
             finally:
-                if selection != None:
+                tickers = ["Öneri Sayısı Seç", 3, 5, 10]
+                selection = st.selectbox("Kaç öneri görmek istersiniz?", tickers)
+                if selection != "Öneri Sayısı Seç":
                     if selection != 10:
-                        rec_list = df.corrwith(rec_song, axis=1).sort_values(ascending=False).head(selection + 1)
-                        rec_list = rec_list[~(rec_list == 1)]
+                        rec_list = df.corrwith(rec_song, axis=1, numeric_only=True).sort_values(ascending=False).head(selection + 1)
+                        rec_list = rec_list[1:]
                         rec_df = df.loc[rec_list.index, ["name", "artists"]]
                         rec_cols = st.columns(selection, gap="small")
                         for i in range(rec_df.shape[0]):
