@@ -11,7 +11,7 @@ def read_data():
     part5 = pd.read_csv("datas/part5.csv", index_col=[0])
     part6 = pd.read_csv("datas/part6.csv", index_col=[0])
     part7 = pd.read_csv("datas/part7.csv", index_col=[0])
-    df = pd.concat([part1, part2, part3, part4, part5, part6, part7], ignore_index=True)
+    df = pd.concat([part5, part6, part7], ignore_index=True)
     return df
 
 
