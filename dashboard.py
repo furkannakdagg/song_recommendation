@@ -72,7 +72,7 @@ if col1.checkbox("Şarkıyı Bul"):
             art_info, song_info, release_date, explicit, song_spot, art_spot = ss.info(song_name, artist_name)
             markdown_summary(col1)
             col1.markdown("""#### Lütfen kaç öneri getirmek istediğinizi seçin 👇""")
-            st.write("İşlem internet hızınıza göre 1-2 dakika sürebilmektedir! ⏱")
+            st.write("İşlem internet hızınıza göre 2-3 dakika sürebilmektedir! ⏱")
             tickers = ["Öneri Sayısı Seç", 3, 5, 10]
             selection = st.selectbox("Kaç öneri görmek istersiniz?", tickers)
             if song_name and artist_name:
