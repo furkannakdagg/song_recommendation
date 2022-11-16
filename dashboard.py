@@ -86,6 +86,9 @@ if col1.checkbox("Şarkıyı Bul"):
                     rec_df = df.loc[rec_list.index, ["name", "artists"]]
                 except:
                     rec_song = ss.audio_features(song_name, artist_name)
+                    rec_list = df.corrwith(rec_song, axis=1, numeric_only=True).sort_values(ascending=False).head(11)
+                    rec_list = rec_list[1:]
+                    rec_df = df.loc[rec_list.index, ["name", "artists"]]
                 finally:
                     if selection != "Öneri Sayısı Seç":
                         if selection != 10:
