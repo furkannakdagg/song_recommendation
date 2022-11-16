@@ -1,11 +1,10 @@
 import streamlit as st
-import extras
 import spotify_search as ss
 import extras
 from PIL import Image
 
 
-# qr = Image.open('QR.png')
+qr = Image.open('qr.png')
 spo_png = Image.open("images/spotify.png")
 error_img = Image.open("images/error.jpeg")
 miuul = Image.open("images/miuul.png")
@@ -46,7 +45,6 @@ with col2:
 with col3:
     col3.markdown("[![Foo](https://img.icons8.com/material-outlined/96/000000/github.png)](https://github.com/furkannakdagg/song_recommendation)")
 st.write(" ")
-
 
 
 
@@ -119,69 +117,3 @@ if song_name and artist_name:
                             rec_cols[i].audio(rec_preview)
                             markdown_summary(rec_cols[i])
 
-
-
-
-
-# with col1:
-#     st.checkbox("Disable text input widget", key="disabled")
-#     st.radio(
-#         "Set text input label visibility 👉",
-#         key="visibility",
-#         options=["visible", "hidden", "collapsed"],
-#     )
-#     st.text_input(
-#         "Placeholder for the other text input widget",
-#         "This is a placeholder",
-#         key="placeholder",
-#     )
-#
-# with col2:
-#     text_input = st.text_input(
-#         "Enter some text 👇",
-#         label_visibility=st.session_state.visibility,
-#         disabled=st.session_state.disabled,
-#         placeholder=st.session_state.placeholder,
-#     )
-#
-#     if text_input:
-#         st.write("You entered: ", text_input)
-#
-#
-# col1, col2 = st.columns(2, gap="medium")
-# with col1:
-#     song_name = st.text_input("Şarkı Adı")
-#     artist_name = st.text_input("Sanatçı Adı")
-#     if song_name and artist_name:
-#         img, preview = ss.search_pic(song_name, artist_name)
-#         col2.markdown("## Albüm Kapağı")
-#         col2.image(img)
-#         col2.markdown("## Şarkının Ön İzlemesi")
-#         col2.audio(preview)
-#
-#     check = st.checkbox("Şarkının doğru olduğunu onaylıyor musunuz?")
-#     if song_name and artist_name and check:
-#         with col1:
-#             tickers = [None, 3, 5, 10]
-#             selection = st.selectbox("Kaç öneri görmek istersiniz?", tickers)
-#             try:
-#                 rec_song = df[(df["name"].str.contains(song_name, case=False)) &
-#                               (df["artists"].str.contains(artist_name, case=False))] \
-#                     .drop(["name", "artists"], axis=1)
-#                 rec_song = rec_song.iloc[0].squeeze()
-#             except:
-#                 rec_song = ss.audio_features(song_name, artist_name)
-#             finally:
-#                 if selection != None:
-#                     rec_list = df.corrwith(rec_song, axis=1).sort_values(ascending=False).head(selection + 1)
-#                     rec_list = rec_list[~(rec_list == 1)]
-#                     rec_df = df.loc[rec_list.index, ["name", "artists"]]
-#
-# rec_cols = st.columns(rec_df.shape[0], gap="small")
-# for i in range(rec_df.shape[0]):
-#     rec_name = rec_df.iloc[i, 0]
-#     rec_song = rec_df.iloc[i, 1]
-#     rec_img, rec_preview = ss.search_pic(rec_name, rec_song)
-#     rec_cols[i].image(rec_img)
-#     rec_cols[i].audio(rec_preview)
-#
