@@ -54,7 +54,8 @@ Aramak istediğiniz şarkıyı lütfen aşağıya yazınız 👇
 """)
 song_name = col1.text_input("Şarkı Adı")
 artist_name = col1.text_input("Sanatçı Adı")
-if song_name and artist_name:
+
+if st.button("Şarkıyı Bul"):
     if ss.search_pic(song_name, artist_name) == -1:
         col2.markdown("""
         ### Eminiz ki istediğiniz şarkı şu an bir yerlerde besteleniyordur 🎶
@@ -77,15 +78,20 @@ if song_name and artist_name:
                     .drop(["name", "artists"], axis=1)
                 rec_song = rec_song.iloc[0].squeeze()
             except:
+                st.write("Aradığınız şarkı database'de bulunamadı. Spotify database'ine bağlanılıyor...")
+                st.write("Spotify database'inden şarkı bilgileri alınıyor...")
                 rec_song = ss.audio_features(song_name, artist_name)
+                st.write("Şarkı bilgileri alındı!")
             finally:
                 tickers = ["Öneri Sayısı Seç", 3, 5, 10]
                 selection = st.selectbox("Kaç öneri görmek istersiniz?", tickers)
                 if selection != "Öneri Sayısı Seç":
+                    st.write("İşlem internet hızınıza göre 1-2 dakika sürebilmektedir! ⏱")
+                    rec_list = df.corrwith(rec_song, axis=1, numeric_only=True).sort_values(ascending=False).head(
+                        selection + 1)
+                    rec_list = rec_list[1:]
+                    rec_df = df.loc[rec_list.index, ["name", "artists"]]
                     if selection != 10:
-                        rec_list = df.corrwith(rec_song, axis=1, numeric_only=True).sort_values(ascending=False).head(selection + 1)
-                        rec_list = rec_list[1:]
-                        rec_df = df.loc[rec_list.index, ["name", "artists"]]
                         rec_cols = st.columns(selection, gap="small")
                         for i in range(rec_df.shape[0]):
                             rec_name = rec_df.iloc[i, 0]
