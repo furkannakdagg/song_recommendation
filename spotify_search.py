@@ -19,10 +19,10 @@ def search_pic(song_name, artist_name):
 
 
 
-def audio_features(song_name, artist_name):
+def aud_feat(song_name, artist_name):
     find = song_name + " " + artist_name
     song = sp.search(find, limit=5)
-    popularity = song["tracks"]["items"][0]["popularity"]
+    #popularity = song["tracks"]["items"][0]["popularity"]
     explicit = 1 if song["tracks"]["items"][0]["explicit"] else 0
     release_date = pd.to_datetime(pd.Series(song["tracks"]["items"][0]["album"]["release_date"])).dt.year[0]
     danceability = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["danceability"]
@@ -37,7 +37,7 @@ def audio_features(song_name, artist_name):
     valence = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["valence"]
     tempo = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["tempo"]
 
-    song_analysis = pd.Series(data=[popularity, explicit, release_date, danceability, energy, key, loudness,
+    song_analysis = pd.Series(data=[explicit, release_date, danceability, energy, key, loudness,
                     mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo])
     return song_analysis
 
