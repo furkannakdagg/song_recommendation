@@ -22,7 +22,9 @@ def search_pic(song_name, artist_name):
 def audio_features(song_name, artist_name):
     find = song_name + " " + artist_name
     song = sp.search(find, limit=5)
+    popularity = song["tracks"]["items"][0]["popularity"]
     explicit = 1 if song["tracks"]["items"][0]["explicit"] else 0
+    release_date = pd.to_datetime(pd.Series(song["tracks"]["items"][0]["album"]["release_date"])).dt.year[0]
     danceability = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["danceability"]
     energy = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["energy"]
     key = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["key"]
@@ -35,7 +37,7 @@ def audio_features(song_name, artist_name):
     valence = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["valence"]
     tempo = sp.audio_features(song["tracks"]["items"][0]["id"])[0]["tempo"]
 
-    song_analysis = pd.Series(data=[explicit, danceability, energy, key, loudness,
+    song_analysis = pd.Series(data=[popularity, explicit, release_date, danceability, energy, key, loudness,
                     mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo])
     return song_analysis
 
@@ -50,3 +52,10 @@ def info(song_name, artist_name):
     song_spot = song["tracks"]["items"][0]["external_urls"]["spotify"]
     art_spot = song["tracks"]["items"][0]["album"]["artists"][0]["external_urls"]["spotify"]
     return art_info, song_info, release_date, explicit, song_spot, art_spot
+
+def rec_song(df, rec_song):
+    rec_list = df.corrwith(rec_song, axis=1, numeric_only=True).sort_values(ascending=False).head(11)
+    rec_list = rec_list[1:]
+    rec_df = df.loc[rec_list.index, ["name", "artists"]]
+    rec_df.to_csv("rec_df.csv")
+
