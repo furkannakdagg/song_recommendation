@@ -95,6 +95,7 @@ def main():
     song_name = col1.text_input("Şarkı Adı")
     artist_name = col1.text_input("Sanatçı Adı")
     check = col1.checkbox("Şarkıyı Bul")
+    col1.markdown("> 'Data leaked' hatası alırsanız lütfen sayfayı yenileyiniz! 🔁")
 
     if check and (len(song_name) >= 1 or len(artist_name) >= 1):
         if ss.search_pic(song_name, artist_name) == -1:
