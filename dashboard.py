@@ -35,23 +35,8 @@ def markdown_summary(col, art_info, song_info, release_date, explicit, song_spot
     Sanatçının Spotify Linki: {art_spot}
     """)
 
-def markdown_other(col, art_info, song_info, release_date, explicit, song_spot, art_spot):
-    return col.markdown(f"""
-    Sanatçı Adı: {art_info}
 
-    Şarkı Adı: {song_info}
-
-    Yayınlanma Tarihi: {release_date}
-
-    Hassas İçerik: {explicit}
-
-    Şarkının Spotify Linki: {song_spot}
-
-    Sanatçının Spotify Linki: {art_spot}
-    """)
-
-
-def other_songs_by_artist(dataframe):
+def other_songs_by_artist(dataframe, artist_name, song_name):
     df_artist = dataframe.loc[(df["artists"] == artist_name) | (df["artists"] == artist_name.lower())
                               | (df["artists"] == artist_name.upper()) | (df["artists"] == artist_name.capitalize())]\
         .sort_values("popularity", ascending=False)
@@ -73,7 +58,7 @@ def other_songs_by_artist(dataframe):
             st_cols[i].audio(wait_preview)
             art_info, song_info, release_date, explicit, song_spot, art_spot = ss.info(wait_song,
                                                                                        wait_name)
-            markdown_other(st_cols[i], art_info, song_info, release_date, explicit, song_spot, art_spot)
+            markdown_summary(st_cols[i], art_info, song_info, release_date, explicit, song_spot, art_spot)
     elif len(df_artist) >= 5:
         st_cols = st.columns(5)
         for i in range(5):
@@ -84,7 +69,7 @@ def other_songs_by_artist(dataframe):
             st_cols[i].audio(wait_preview)
             art_info, song_info, release_date, explicit, song_spot, art_spot = ss.info(wait_song,
                                                                                        wait_name)
-            markdown_other(st_cols[i], art_info, song_info, release_date, explicit, song_spot, art_spot)
+            markdown_summary(st_cols[i], art_info, song_info, release_date, explicit, song_spot, art_spot)
 
 
 def main():
@@ -219,7 +204,7 @@ def main():
                             markdown_summary(rec_cols2[i], art_info, song_info, release_date, explicit, song_spot, art_spot)
             st.markdown("---")
             if st.button("Sanatçının diğer şarkılarına göz at 👀"):
-                other_songs_by_artist(df)
+                other_songs_by_artist(df, artist_name, song_name)
 
 
 if __name__ == '__main__':
