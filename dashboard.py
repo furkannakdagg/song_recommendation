@@ -139,7 +139,7 @@ if check and (len(song_name) >= 1 or len(artist_name) >= 1):
         rec1, rec2 = st.columns(2)
         selection = rec1.number_input(label="Kaç öneri görmek istersiniz?", min_value=1, max_value=10, step=1, value=5)
         year_range = rec2.number_input(label="Filtrelemek istediğiniz yıl aralığı", min_value=5, max_value=40, step=1,
-                                       value=15)
+                                       value=10)
         rec1.markdown("👇 Filtreleme seçimlerinizi yaptıktan sonra kutucuğa tıklayarak önerileri sıralayabilirsiniz.")
         recomm = rec1.button("Önerileri Getir!")
         if recomm:
